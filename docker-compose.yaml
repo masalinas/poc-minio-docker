@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   minio:
-    container_name: minio_local
+    container_name: minio
     image: minio/minio:latest
     ports:
       - '9010:9000'
@@ -13,11 +13,13 @@ services:
       - MINIO_CONFIG_ENV_FILE=/etc/config.env
       - MINIO_API_SELECT_PARQUET=on
     volumes:
-      - ./data:/mnt/data
+      - minio_data:/mnt/data
       - ./credentials/.env.dev:/etc/config.env
     command: server --console-address ":9090"
     networks:
       - minio-net
+volumes:
+  minio_data:
 
 networks:
   minio-net:
